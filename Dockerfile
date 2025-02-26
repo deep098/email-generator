@@ -1,11 +1,8 @@
 FROM python:3.13
 
-RUN apt-get update && apt-get install -y --no-install-recommends  \
-    curl libpq-dev gcc build-essential && \
-    pip3 install --upgrade setuptools &&\
-    python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pip
 
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN apt-get clean
 
@@ -17,4 +14,4 @@ COPY ./README.md /home/
 
 RUN poetry install
 COPY ./test_file.py /home/
-CMD [ "poetry run test_file" ]
+CMD [ "poetry" ,"run", "python", "test_file.py" ]
